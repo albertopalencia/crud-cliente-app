@@ -1,0 +1,123 @@
+<ul class="alert alert-danger" *ngIf="errores?.length > 0">
+  <li *ngFor="let err of errores">
+    {{ err }}
+  </li>
+</ul>
+
+<div class="card">
+  <div class="card-header">{{ titulo }}</div>
+  <div class="card-body">
+
+    <form #clienteForm="ngForm" novalidate>
+       <div class="form-group row">
+        <label for="region" class="col-form-label col-sm-2">Tipo Documento</label>
+        <div class="col-sm-6">
+          <select class="form-control" [(ngModel)]="cliente.tipoDocumento" name="tipodocumento"
+            style="width:500px;">
+            <option *ngFor="let tc of tipodocumento" [ngValue]="tc.tipo">{{tc.tipo}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="apellido" class="col-form-label col-sm-2">Documento</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="cliente.documento" name="documento" #documento="ngModel">
+          <!-- required -->
+          <div class="alert alert-danger" *ngIf="documento.invalid && (documento.dirty || documento.touched)">
+            <div *ngIf="documento.errors.required">
+              Documento es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombres</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel">
+          <!-- required minlength="4" -->
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+            <div *ngIf="nombre.errors.required">
+              Nombres es requerido
+            </div>
+            <div *ngIf="nombre.errors.minlength">
+              Nombres debe tener al menos 4 caracteres
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="apellido" class="col-form-label col-sm-2">Apellidos</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel">
+          <!-- required -->
+          <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+            <div *ngIf="apellido.errors.required">
+              Apellidos es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-2">Email</label>
+        <div class="col-sm-6">
+          <input type="email" class="form-control" [(ngModel)]="cliente.email" name="email" #email="ngModel">
+          <!-- required email -->
+          <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">
+              Email es requerido
+            </div>
+            <div *ngIf="email.errors.email">
+              Email debe tener un formato válido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="telefono" class="col-form-label col-sm-2">Telefono</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="cliente.telefono" name="telefono"
+          #telefono="ngModel">
+          <!-- required -->
+          <div class="alert alert-danger" *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
+            <div *ngIf="telefono.errors.required">
+              Telefono es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="direccion" class="col-form-label col-sm-2">Direcci&oacute;n</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="cliente.direccion" name="direccion"
+          #direccion="ngModel">
+          <!-- required -->
+          <div class="alert alert-danger" *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)">
+            <div *ngIf="direccion.errors.required">
+              direccion es requerido
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <button class="btn btn-primary" role="button" (click)='create()'
+          *ngIf="!cliente.id else elseBlock"
+            [disabled]="!clienteForm.form.valid">Crear</button>
+
+          <ng-template #elseBlock>
+            <button class="btn btn-warning" role="button" (click)='update()'
+              [disabled]="!clienteForm.form.valid">Editar</button>
+          </ng-template>
+        </div>
+        <div class="col-sm-6">
+        <button class="btn btn-primary"  role="button"
+          (click)='regresar()'>Regresar</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
